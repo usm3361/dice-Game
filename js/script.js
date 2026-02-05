@@ -76,6 +76,7 @@ function updateDisplay() {
 
 // Draw dice
 function drawDice1(number) {
+    console.log(number)
   const dice1 = document.getElementById("dice1");
   const face1 = dice1.querySelector(".dice1-face");
 
@@ -224,24 +225,6 @@ function endGame() {
 
   // Celebrate
   celebrate();
-}
-
-// New game
-document.getElementById("newGameBtn").addEventListener("click", newGame);
-
-function newGame() {
-  gameState.players = [
-    { total: 0, current: 0, name: "Ron" },
-    { total: 0, current: 0, name: "Dani" },
-  ];
-  gameState.currentPlayer = 0;
-  gameState.gameActive = true;
-  gameState.rolling = false;
-
-  updateDisplay();
-  drawDice1(1);
-  drawDice2(1);
-  document.getElementById("resultMessage").textContent = "";
 }
 
 // Game mode buttons
