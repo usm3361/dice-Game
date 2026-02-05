@@ -6,7 +6,7 @@ let gameState = {
   ],
   currentPlayer: 0,
   gameActive: true,
-  gameMode: "pvp", // 'pvp' or 'pvc'
+  gameMode: "pvp",
   rolling: false,
 };
 
@@ -75,54 +75,78 @@ function updateDisplay() {
 }
 
 // Draw dice
-function drawDice(number) {
+function drawDice1(number) {
   const dice1 = document.getElementById("dice1");
-  const dice2 = document.getElementById("dice2");
   const face1 = dice1.querySelector(".dice1-face");
-  const face2 = dice2.querySelector(".dice2-face");
 
   face1.innerHTML = "";
-  face2.innerHTML = "";
 
   const dots1 = diceFaces[number];
   dots1.forEach((dot) => {
-    const dotEl = document.createElement("span");
-    dotEl.className = "dot";
-    dotEl.style.left = `${dot.x}%`;
-    dotEl.style.top = `${dot.y}%`;
-    face1.appendChild(dotEl);
+    const dot1El = document.createElement("span");
+    dot1El.className = "dot";
+    dot1El.style.left = `${dot.x}%`;
+    dot1El.style.top = `${dot.y}%`;
+    face1.appendChild(dot1El);
   });
+}
+function drawDice2(number) {
+  const dice2 = document.getElementById("dice2");
+  const face2 = dice2.querySelector(".dice2-face");
+
+  face2.innerHTML = "";
+
   const dots2 = diceFaces[number];
   dots2.forEach((dot) => {
-    const dotEl = document.createElement("span");
-    dotEl.className = "dot";
-    dotEl.style.left = `${dot.x}%`;
-    dotEl.style.top = `${dot.y}%`;
-    face2.appendChild(dotEl);
+    const dot2El = document.createElement("span");
+    dot2El.className = "dot";
+    dot2El.style.left = `${dot.x}%`;
+    dot2El.style.top = `${dot.y}%`;
+    face2.appendChild(dot2El);
   });
 }
 
 // Roll dice with animation
-async function rollDice() {
+async function rollDice1() {
   if (!gameState.gameActive || gameState.rolling) return;
 
   gameState.rolling = true;
   const dice1 = document.getElementById("dice1");
-  const dice2 = document.getElementById("dice2");
   dice1.classList.add("rolling");
-  dice2.classList.add("rolling");
 
   // Animate random numbers
   for (let i = 0; i < 10; i++) {
-    drawDice(Math.floor(Math.random() * 6) + 1);
+    drawDice1(Math.floor(Math.random() * 6) + 1);
     await new Promise((resolve) => setTimeout(resolve, 100));
   }
 
   // Final roll
   const result = Math.floor(Math.random() * 6) + 1;
-  drawDice(result);
+  drawDice1(result);
 
   dice1.classList.remove("rolling");
+  gameState.rolling = false;
+
+  return result;
+}
+// Roll dice2 with animation
+async function rollDice2() {
+  if (!gameState.gameActive || gameState.rolling) return;
+
+  gameState.rolling = true;
+  const dice2 = document.getElementById("dice2");
+  dice2.classList.add("rolling");
+
+  // Animate random numbers
+  for (let i = 0; i < 10; i++) {
+    drawDice2(Math.floor(Math.random() * 6) + 1);
+    await new Promise((resolve) => setTimeout(resolve, 100));
+  }
+
+  // Final roll
+  const result = Math.floor(Math.random() * 6) + 1;
+  drawDice2(result);
+
   dice2.classList.remove("rolling");
   gameState.rolling = false;
 
@@ -135,8 +159,8 @@ document.getElementById("rollBtn").addEventListener("click", async () => {
 
   document.getElementById("resultMessage").textContent = "";
 
-  const roll1 = await rollDice();
-  const roll2 = await rollDice();
+  const roll1 = await rollDice1();
+  const roll2 = await rollDice2();
 
   if (roll1 === roll2) {
     // Lost turn
@@ -226,7 +250,8 @@ function newGame() {
   gameState.rolling = false;
 
   updateDisplay();
-  drawDice(1);
+  drawDice1(1);
+  drawDice2(1);
   document.getElementById("resultMessage").textContent = "";
 }
 
@@ -295,4 +320,5 @@ function createConfetti() {
 
 // Initialize
 updateDisplay();
-drawDice(1);
+drawDice1(1);
+drawDice2(1);
