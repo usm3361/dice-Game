@@ -258,27 +258,23 @@ body {
   opacity: 0.5;
   cursor: not-allowed;
 }
-
 .btn-icon {
   font-size: 1.5rem;
 }
 
 .btn-roll {
-  background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+  background: linear-gradient(135deg, #bb488b 0%, #38a169 100%);
   color: white;
 }
 
 .btn-hold {
-  background: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%);
+  background: linear-gradient(135deg, #7636ed 0%, #dd6b20 100%);
   color: white;
 }
 
-.btn-new {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-}
 
 .result-message {
+    height: 3.5rem;
   text-align: center;
   padding: 15px;
   border-radius: 10px;
@@ -304,41 +300,6 @@ body {
   background: #bee3f8;
   color: #2c5282;
   border: 2px solid #90cdf4;
-}
-
-.instructions {
-  background: #f7fafc;
-  padding: 20px;
-  border-radius: 10px;
-  border: 2px solid #e2e8f0;
-}
-
-.instructions h3 {
-  color: #2d3748;
-  margin-bottom: 12px;
-  font-size: 1.1rem;
-}
-
-.instructions ul {
-  list-style: none;
-  padding-right: 0;
-}
-
-.instructions li {
-  color: #4a5568;
-  margin-bottom: 8px;
-  padding-right: 20px;
-  position: relative;
-  line-height: 1.6;
-}
-
-.instructions li:before {
-  content: "•";
-  color: #667eea;
-  font-weight: bold;
-  position: absolute;
-  right: 0;
-  font-size: 1.2rem;
 }
 
 /* Confetti */

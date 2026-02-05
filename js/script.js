@@ -107,46 +107,36 @@ function drawDice2(number) {
 }
 
 // Roll dice with animation
-async function rollDice1() {
+async function rollDice() {
   if (!gameState.gameActive || gameState.rolling) return;
 
   gameState.rolling = true;
   const dice1 = document.getElementById("dice1");
   dice1.classList.add("rolling");
-
+  
+  gameState.rolling = true;
+  const dice2 = document.getElementById("dice2");
+    dice2.classList.add("rolling");
+    
   // Animate random numbers
   for (let i = 0; i < 10; i++) {
     drawDice1(Math.floor(Math.random() * 6) + 1);
-    await new Promise((resolve) => setTimeout(resolve, 100));
-  }
-
-  // Final roll
-  const result = Math.floor(Math.random() * 6) + 1;
-  drawDice1(result);
-
-  dice1.classList.remove("rolling");
-  gameState.rolling = false;
-
-  return result;
-}
-// Roll dice2 with animation
-async function rollDice2() {
-  if (!gameState.gameActive || gameState.rolling) return;
-
-  gameState.rolling = true;
-  const dice2 = document.getElementById("dice2");
-  dice2.classList.add("rolling");
-
-  // Animate random numbers
-  for (let i = 0; i < 10; i++) {
     drawDice2(Math.floor(Math.random() * 6) + 1);
     await new Promise((resolve) => setTimeout(resolve, 100));
-  }
-
+    }
+    
   // Final roll
-  const result = Math.floor(Math.random() * 6) + 1;
-  drawDice2(result);
-
+  let result = [];
+  const resultRoll1 = Math.floor(Math.random() * 6) + 1;
+  drawDice1(resultRoll1);
+  result.push(resultRoll1);
+  dice1.classList.remove("rolling");
+  gameState.rolling = false;
+  
+  // Roll dice2
+  const resultRoll2 = Math.floor(Math.random() * 6) + 1;
+  drawDice2(resultRoll2);
+  result.push(resultRoll2);
   dice2.classList.remove("rolling");
   gameState.rolling = false;
 
@@ -159,10 +149,9 @@ document.getElementById("rollBtn").addEventListener("click", async () => {
 
   document.getElementById("resultMessage").textContent = "";
 
-  const roll1 = await rollDice1();
-  const roll2 = await rollDice2();
+  const roll = await rollDice();
 
-  if (roll1 === roll2) {
+  if (roll[0] === roll[1]) {
     // Lost turn
     gameState.players[gameState.currentPlayer].current = 0;
     showMessage(
@@ -174,9 +163,9 @@ document.getElementById("rollBtn").addEventListener("click", async () => {
     switchPlayer();
   } else {
     // Add to current
-    gameState.players[gameState.currentPlayer].current += roll1 + roll2;
+    gameState.players[gameState.currentPlayer].current += roll[0] + roll[1];
     updateDisplay();
-    showMessage(`🎲 rolled ${roll1} and  ${roll2}!`, "info");
+    showMessage(`🎲 rolled ${roll[0]} and  ${roll[1]}!`, "info");
   }
 });
 
